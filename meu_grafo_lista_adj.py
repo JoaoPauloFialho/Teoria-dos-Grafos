@@ -226,6 +226,7 @@ class MeuGrafo(GrafoListaAdjacencia):
         pi[vertice.rotulo] = "-"
 
         while(len(analisados) != len(self.vertices)):
+            print(beta.items())
             vertice = min(dict(filter(lambda a : a[0] not in analisados, beta.items())))
             arestas = self.arestas_sobre_vertice(vertice)
 
@@ -237,7 +238,6 @@ class MeuGrafo(GrafoListaAdjacencia):
                     alfa[vertice_analise] = 0
                     beta[vertice_analise] = beta[vertice] + aresta.peso #o peso total do caminho é a soma do peso da aresta atual de análise mais todas
                     pi[vertice_analise] = vertice                       #as outras do caminho
-
                 else:
                     novo_beta = beta[vertice] + aresta.peso
                     antigo_beta = beta[vertice_analise]
@@ -249,7 +249,6 @@ class MeuGrafo(GrafoListaAdjacencia):
             if(vertice not in analisados):
                 analisados.append(vertice)
                 alfa[vertice] = 1
-
         return self.dijkstra_fabricar_caminho(pi, vi, vf)
 
     def dijkstra_fabricar_caminho(self, pi, vi, vf):

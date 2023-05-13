@@ -56,6 +56,23 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
         Provê a matriz de alcançabilidade de Warshall do grafo
         :return: Uma lista de listas que representa a matriz de alcançabilidade de Warshall associada ao grafo
         '''
+        E = []
+
+        for i in range(len(self.vertices)):
+            linha = []
+            for j in range(len(self.vertices)):
+                if len(self.matriz[i][j]) >= 1:
+                    linha.append(1)
+                else:
+                    linha.append(0)
+            E.append(linha)
+
+        for i in range(len(self.vertices)):
+            for j in range(len(self.vertices)):
+                if E[j][i] == 1:
+                    for k in range(len(self.vertices)):
+                        E[j][k] = E[j][k] if E[j][k] > E[i][k] else E[i][k]
+        return E
         pass
 
     def dijkstra_drone(self, vi, vf, carga:int, carga_max:int, pontos_recarga:list()):
