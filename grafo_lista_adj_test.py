@@ -7,6 +7,48 @@ from bibgrafo.aresta import Aresta
 class TestGrafo(unittest.TestCase):
 
     def setUp(self):
+        self.g_t1_mst = MeuGrafo()
+        self.g_t1_mst.adiciona_vertice("J")
+        self.g_t1_mst.adiciona_vertice("P")
+        self.g_t1_mst.adiciona_vertice("C")
+        self.g_t1_mst.adiciona_vertice("F")
+        self.g_t1_mst.adiciona_vertice("L")
+        self.g_t1_mst.adiciona_vertice("G")
+        self.g_t1_mst.adiciona_vertice("B")
+        self.g_t1_mst.adiciona_vertice("X")
+        self.g_t1_mst.adiciona_vertice("Z")
+        self.g_t1_mst.adiciona_aresta('a1', 'J', 'P', 1)
+        self.g_t1_mst.adiciona_aresta('a7', 'P', 'L', 1)
+        self.g_t1_mst.adiciona_aresta('a9', 'X', 'G', 1)
+        self.g_t1_mst.adiciona_aresta('a11', 'X', 'B', 2)
+        self.g_t1_mst.adiciona_aresta('a5', 'P', 'F', 2)
+        self.g_t1_mst.adiciona_aresta('a8', 'L', 'G', 2)
+        self.g_t1_mst.adiciona_aresta('a3', 'C', 'P', 8)
+        self.g_t1_mst.adiciona_aresta('a12', 'X', 'Z', 10)
+
+        self.g_t1 = MeuGrafo()
+        self.g_t1.adiciona_vertice("J")
+        self.g_t1.adiciona_vertice("P")
+        self.g_t1.adiciona_vertice("C")
+        self.g_t1.adiciona_vertice("F")
+        self.g_t1.adiciona_vertice("L")
+        self.g_t1.adiciona_vertice("G")
+        self.g_t1.adiciona_vertice("B")
+        self.g_t1.adiciona_vertice("X")
+        self.g_t1.adiciona_vertice("Z")
+        self.g_t1.adiciona_aresta('a1', 'J', 'P', 1)
+        self.g_t1.adiciona_aresta('a2', 'P', 'F', 10)
+        self.g_t1.adiciona_aresta('a3', 'C', 'P', 8)
+        self.g_t1.adiciona_aresta('a4', 'P', 'C', 8)
+        self.g_t1.adiciona_aresta('a5', 'P', 'F', 2)
+        self.g_t1.adiciona_aresta('a6', 'P', 'G', 3)
+        self.g_t1.adiciona_aresta('a7', 'P', 'L', 1)
+        self.g_t1.adiciona_aresta('a8', 'L', 'G', 2)
+        self.g_t1.adiciona_aresta('a9', 'X', 'G', 1)
+        self.g_t1.adiciona_aresta('a10', 'B', 'G', 3)
+        self.g_t1.adiciona_aresta('a11', 'X', 'B', 2)
+        self.g_t1.adiciona_aresta('a12', 'X', 'Z', 10)
+
         # Grafo dijkstra
         self.g_dij = MeuGrafo()
         self.g_dij.adiciona_vertice("A")
@@ -23,6 +65,18 @@ class TestGrafo(unittest.TestCase):
         self.g_dij.adiciona_aresta('a6', 'B', 'F', 7)
         self.g_dij.adiciona_aresta('a7', 'C', 'E', 3)
         self.g_dij.adiciona_aresta('a8', 'D', 'F', 1)
+
+        # prim
+        self.g_tp = MeuGrafo()
+        self.g_tp.adiciona_vertice("A")
+        self.g_tp.adiciona_vertice("B")
+        self.g_tp.adiciona_vertice("C")
+        self.g_tp.adiciona_vertice("D")
+        self.g_tp.adiciona_aresta('a1', 'A', 'B', 1)
+        self.g_tp.adiciona_aresta('a2', 'B', 'C', 5)
+        self.g_tp.adiciona_aresta('a3', 'A', 'C', 10)
+        self.g_tp.adiciona_aresta('a4', 'B', 'D', 7)
+        self.g_tp.adiciona_aresta('a5', 'D', 'C', 5)
 
         self.dijkstra5 = MeuGrafo()
         self.dijkstra5.adiciona_vertice("A")
@@ -420,3 +474,9 @@ class TestGrafo(unittest.TestCase):
         self.assertEqual(self.dijkstra5.dijkstra("A", "C"), ["A", 'C'])
         self.assertEqual(self.dijkstra5.dijkstra('C', 'B'), ["C", 'B'])
         self.assertEqual(self.dijkstra5.dijkstra('B', 'C'), ["B", 'C'])
+
+    def testPrim(self):
+        self.g_dij.prim()
+
+    def test_kruskall(self):
+        self.assertEqual(self.g_t1.Kruskall(), self.g_t1_mst)

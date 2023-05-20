@@ -1,5 +1,6 @@
 from bibgrafo.grafo_lista_adjacencia import GrafoListaAdjacencia
 from bibgrafo.grafo_errors import *
+import math
 from bibgrafo.vertice import Vertice
 from bibgrafo.aresta import Aresta
 
@@ -140,6 +141,7 @@ class MeuGrafo(GrafoListaAdjacencia):
             return True
         return False
 
+
     def dfs_aux(self, arvore_dfs, raiz):
         """
         Função auxiliar para realizar a recursão da busca em profundidade
@@ -226,12 +228,11 @@ class MeuGrafo(GrafoListaAdjacencia):
         pi[vertice.rotulo] = "-"
 
         while(len(analisados) != len(self.vertices)):
-            print(beta.items())
             vertice = min(dict(filter(lambda a : a[0] not in analisados, beta.items())))
             arestas = self.arestas_sobre_vertice(vertice)
 
             for a in arestas:
-                aresta = self.arestas[a]
+                aresta = arestas[a]
                 vertice_analise = aresta.v1.rotulo if aresta.v2.rotulo == vertice else aresta.v2.rotulo
 
                 if vertice_analise not in alfa:
@@ -269,6 +270,82 @@ class MeuGrafo(GrafoListaAdjacencia):
             vertice_atual = pi[vertice_atual]
 
         return list(reversed(caminho))
+
+    def prim(self):
+        """
+        Função usada para fabricar a Minimum Spanning Tree de um grafo
+        :return: Retorna a Minimun Spanning Tree formada
+        """
+        arvore = MeuGrafo()
+        vertice = self.arestas[min(self.arestas)].v1
+        vertice_analise = ''
+        arvore.adiciona_vertice(vertice.rotulo)
+        vertices_visitados = [vertice.rotulo]
+
+        while(len(arvore.vertices) != len(self.vertices)):
+            menor_peso_aresta = math.inf
+            menor_aresta = ''
+
+            for vertice in vertices_visitados:
+                for a in self.arestas_sobre_vertice(vertice):
+                    aresta = self.arestas[a]
+                    if(aresta.peso < menor_peso_aresta):
+                        if(not arvore.existe_rotulo_aresta(aresta.rotulo)):
+                            menor_aresta = aresta
+                            menor_peso_aresta = aresta.peso
+            print(menor_aresta)
+            print(vertice)
+
+            if menor_aresta.v1.rotulo == vertice:
+                vertice_analise = menor_aresta.v2.rotulo
+            else:
+                vertice_analise = menor_aresta.v1.rotulo
+
+            if not arvore.existe_rotulo_vertice(vertice_analise):
+                vertice = vertice_analise
+                vertices_visitados.append(vertice)
+                arvore.adiciona_vertice(vertice_analise)
+                arvore.adiciona_aresta(menor_aresta)
+            vertices_visitados.append(vertice_analise)
+
+        return arvore
+
+    def Kruskall(self):
+        arvore_kruskall = MeuGrafo()
+        fila_prioridade = self.bucket_sort_kruskall()
+        for v in self.vertices:
+            arvore_kruskall.adiciona_vertice(v.rotulo)
+
+        for i in range(len(fila_prioridade)):
+            for a in fila_prioridade[i]:
+                aresta = self.arestas[a]
+                kruskall_dfs = arvore_kruskall.dfs(aresta.v1.rotulo)
+
+                if kruskall_dfs.existe_rotulo_vertice(aresta.v1.rotulo) and kruskall_dfs.existe_rotulo_vertice(aresta.v2.rotulo):
+                    pass
+                else:
+                    arvore_kruskall.adiciona_aresta(aresta)
+
+        return arvore_kruskall
+
+    def bucket_sort_kruskall(self):
+        lista = []
+        for a in self.arestas:
+            if not self.arestas[a].peso in lista:
+                lista.append(self.arestas[a].peso)
+        lista.sort()
+        ordenado = list()
+        for i in range(len(lista)):
+            ordenado.append([])
+            for a in self.arestas:
+                if self.arestas[a].peso == lista[i]:
+                    ordenado[i].append(a)
+        return ordenado
+
+
+
+
+
 
 
 

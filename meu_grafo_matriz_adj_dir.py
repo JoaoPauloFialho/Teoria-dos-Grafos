@@ -73,7 +73,6 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
                     for k in range(len(self.vertices)):
                         E[j][k] = E[j][k] if E[j][k] > E[i][k] else E[i][k]
         return E
-        pass
 
     def dijkstra_drone(self, vi, vf, carga:int, carga_max:int, pontos_recarga:list()):
         pass
