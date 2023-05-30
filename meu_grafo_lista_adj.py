@@ -278,7 +278,6 @@ class MeuGrafo(GrafoListaAdjacencia):
         """
         arvore = MeuGrafo()
         vertice = self.arestas[min(self.arestas)].v1
-        vertice_analise = ''
         arvore.adiciona_vertice(vertice.rotulo)
         vertices_visitados = [vertice.rotulo]
 
@@ -293,8 +292,6 @@ class MeuGrafo(GrafoListaAdjacencia):
                         if(not arvore.existe_rotulo_aresta(aresta.rotulo)):
                             menor_aresta = aresta
                             menor_peso_aresta = aresta.peso
-            print(menor_aresta)
-            print(vertice)
 
             if menor_aresta.v1.rotulo == vertice:
                 vertice_analise = menor_aresta.v2.rotulo
@@ -310,14 +307,14 @@ class MeuGrafo(GrafoListaAdjacencia):
 
         return arvore
 
-    def Kruskall(self):
+    def kruskall(self):
         arvore_kruskall = MeuGrafo()
-        fila_prioridade = self.bucket_sort_kruskall()
+        ordenado = self.bucket_sort_kruskall()
         for v in self.vertices:
             arvore_kruskall.adiciona_vertice(v.rotulo)
 
-        for i in range(len(fila_prioridade)):
-            for a in fila_prioridade[i]:
+        for i in range(len(ordenado)):
+            for a in ordenado[i]:
                 aresta = self.arestas[a]
                 kruskall_dfs = arvore_kruskall.dfs(aresta.v1.rotulo)
 
