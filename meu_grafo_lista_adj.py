@@ -307,14 +307,19 @@ class MeuGrafo(GrafoListaAdjacencia):
 
         return arvore
 
+
     def kruskall(self):
+        """
+        Função usada para fabricar a Minimum Spanning Tree de um grafo
+        :return: Retorna a Minimun Spanning Tree formada
+        """
         arvore_kruskall = MeuGrafo()
         ordenado = self.bucket_sort_kruskall()
         for v in self.vertices:
             arvore_kruskall.adiciona_vertice(v.rotulo)
 
-        for i in range(len(ordenado)):
-            for a in ordenado[i]:
+        for o in ordenado:
+            for a in o:
                 aresta = self.arestas[a]
                 kruskall_dfs = arvore_kruskall.dfs(aresta.v1.rotulo)
 
@@ -326,6 +331,10 @@ class MeuGrafo(GrafoListaAdjacencia):
         return arvore_kruskall
 
     def bucket_sort_kruskall(self):
+        """
+        função de ordenação utilizada para fazer o algoritmo de kruskall modificado
+        :return: lista ordenada
+        """
         lista = []
         for a in self.arestas:
             if not self.arestas[a].peso in lista:
