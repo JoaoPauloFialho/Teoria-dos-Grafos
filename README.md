@@ -1,11 +1,3 @@
-# Teoria-dos-Grafos
-# teoria-dos-grafos
-# teoria-dos-grafos
-# teoria-dos-grafos
-# teoria-dos-grafos
-# teoria-dos-grafos
-# teoria-dos-grafos
-# Teoria-dos-grafos
-# Teoria-dos-grafos
-# Teoria-dos-Grafos
-# Teoria-dos-Grafos
+# Teoria dos Grafos
+
+Resolução de alguns roteiros passados na cadeira "Teoria dos Grafos" do curso engenharia da computação do IFPB
